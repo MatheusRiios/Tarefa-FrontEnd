@@ -1,33 +1,72 @@
-.App {
-  text-align: center;
+/*Componente Header*/
+.container-header{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2%; 
+  background-color: #f8f8f8;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.container-header h1 {
+  color: #0000CD	
+}
+/*Componente Header*/
+
+/*Componente Menu*/
+.ul-menu{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px; 
+  list-style: none;
+  background-color: #0000CD;
+  margin: 0px !important;
+}
+.ul-menu a {
+  color: white;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.ul-menu a:hover{
+  color: black;
+  background-color: white;
+}
+
+.ul-menu li {
+  padding: 10px;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  margin: 15px;
+  cursor: pointer;
+}
+/*Componente Menu*/
+
+/*TabelaUserTodo*/
+.container-modal{
+  width: 100%;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-modal .MuiBackdrop-root-86{
+  width: 50%;
+  left: 25%;
+}
+
+/*TabelaUserTodo*/
+
+/*Modal cadastro*/
+.form-cadastro{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.container-modal.cadastro{
+  background-color: rgba(0, 0, 0, 0.5)
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container-modal.cadastro .MuiBackdrop-root-86{
+  background-color: white;
 }
+/*Modal cadastro*/
