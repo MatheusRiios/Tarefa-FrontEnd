@@ -8,23 +8,33 @@ class Menu extends Component {
         super(props)
 
         this.state = {
-            openModal: false
-        }
+            openModal: false,
+            dadosPessoas: []
+        }        
     }
 
+    componentDidMount(){
+        if(this.props.dadosPessoas !== undefined ) {
+            this.setState({
+                dadosPessoas: this.props.dadosPessoas
+            })
+        }
+    }        
+
     showAndHiddenModal = () => {
-        this.setState({ openModal: !this.state.openModal });
+        this.setState({ openModal: !this.state.openModal });                
     };
 
     render() {
-        const {openModal} = this.state
+        const { openModal } = this.state
         return (
             <div className="container-menu">
                 <ul className="ul-menu">
                     <Button onClick={this.showAndHiddenModal}><li>Cadastrar</li></Button>
                     <Button><li>Listar</li></Button>
-                    <Button><li>Deletar</li></Button>
-                    {openModal !== false ? <CreateTarefa openModal={openModal} /> : null}
+                    <Button><li>Deletar</li></Button>  
+
+                    {openModal !== false ? <CreateTarefa openModal={openModal} /> : null}          
                 </ul>
             </div>
         )

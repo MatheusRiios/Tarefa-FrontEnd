@@ -10,8 +10,6 @@ import Modal from '@material-ui/core/Modal';
 
 import api from "../service/api";
 
-import CreateTarefa from "./createTarefa";
-
 class TabelaUserTodo extends Component {
 
     constructor(props){
@@ -19,6 +17,7 @@ class TabelaUserTodo extends Component {
 
         this.state = {
             dados: [],
+            tarefaPessoa: [],
             openModalTarefas: false
         }
     }
@@ -27,37 +26,50 @@ class TabelaUserTodo extends Component {
         this.carregarApi()
     }
 
-    openAndCloseModal = () => {
-        let open = !this.state.open
-        this.setState({
-            openModalTarefas: open
-        })                
-    }    
-
-    carregarApi = async () => {    
-        const response = await api.get('http://localhost:3000/pessoa')
+    carregarApi = async () => {            
+        const response = await api.get('http://localhost:3000/pessoa');
         const data     = await response.data
-        console.log(data)
+        
         this.setState({
             dados: await data,            
-        })                      
+        });                     
     }
 
-    tableDados = (dado) => {
-        // console.log(dado)
-        // console.log(dado)        
+    openAndCloseModal = async (pessoaID) => {         
+        const response = await api.get(`http://localhost:3000/pessoa/${pessoaID}`);
+        const data     = await response.data;
+        let   open     = !this.state.open;
+
+        this.setState({
+            openModalTarefas: open,
+            tarefaPessoa: data.tarefa,
+        });
+    }    
+
+
+    tablePessoas = (pessoa) => { 
         return (
-            <TableRow key={dado.id}>
-                <TableCell align="center">{dado.nome}</TableCell>    
+            <TableRow key={pessoa.id}>
+                <TableCell align="center">{pessoa.nome}</TableCell>    
                 <TableCell align="center">
-                    <Button onClick={this.openAndCloseModal} variant="contained" color="primary" >Ver tarefas</Button>            
+                    <Button onClick={(e) => this.openAndCloseModal(pessoa.id)} variant="contained" color="primary" >Ver tarefas</Button>            
                 </TableCell>
             </TableRow>
         )
     }
+
+    tableTarefasPessoa = (tarefa) => {        
+        return(
+            <TableRow key={tarefa.id}>                     
+                <TableCell align="center">{tarefa.nomeTarefa}</TableCell>  
+                <TableCell align="center">{tarefa.dataInicio}</TableCell>  
+                <TableCell align="center">{tarefa.dataFinal}</TableCell>  
+            </TableRow>       
+        )              
+    }
     
     render(){
-        const {dados} = this.state                      
+        const {dados, tarefaPessoa} = this.state              
         return(
             <div>
                 <Paper>
@@ -69,7 +81,7 @@ class TabelaUserTodo extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>                        
-                            {dados.map(dado => this.tableDados(dado))}                        
+                            {dados.map(pessoa => this.tablePessoas(pessoa))}                        
                         </TableBody>
                     </Table>
                 </Paper>
@@ -84,14 +96,12 @@ class TabelaUserTodo extends Component {
                                     <TableCell align="center">Data Final</TableCell>  
                                 </TableRow>
                             </TableHead>
-                            <TableBody>                        
-                                
+                            <TableBody>   
+                                {tarefaPessoa.map(tarefa => this.tableTarefasPessoa(tarefa))}
                             </TableBody>
                         </Table>
                     </Paper>
-                </Modal>
-
-                {/* <CreateTarefa dados={} /> */}
+                </Modal>                                            
             </div>
         )
     }
